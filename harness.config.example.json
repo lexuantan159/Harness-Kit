@@ -1,0 +1,27 @@
+{
+  "project": {
+    "name": "my-service",
+    "description": "Order management backend for the web shop.",
+    "stack": "Java 17, Spring Boot 3, PostgreSQL, Maven",
+    "defaultBranch": "main"
+  },
+  "commands": {
+    "build": "./mvnw -q compile",
+    "test": "./mvnw -q test",
+    "lint": "./mvnw -q spotless:check",
+    "run": "./mvnw spring-boot:run"
+  },
+  "stacks": ["java"],
+  "models": {
+    "strong": "claude-opus-5-5",
+    "default": "claude-sonnet-5-5",
+    "fast": "claude-haiku-5-5"
+  },
+  "mcp": {
+    "teams": false,
+    "sequentialThinking": true,
+    "codegraph": false
+  },
+  "python": "python3",
+  "copilot": true
+}
