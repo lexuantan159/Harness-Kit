@@ -1,0 +1,11 @@
+{
+  "name": "harness-kit",
+  "owner": { "name": "lexuantan" },
+  "plugins": [
+    {
+      "name": "harness-kit",
+      "source": "./template/.claude",
+      "description": "AI agent harness: agent team, workflow commands, lifecycle skills, ponytail minimal-code hooks."
+    }
+  ]
+}
