@@ -10,4 +10,4 @@ Review the current branch. Base branch: $ARGUMENTS (empty = the default branch).
    permissions or public APIs, also run `@senior-reviewer`.
 3. Run the verify commands from CLAUDE.md and include the results.
 4. Save the report to `docs/ai/reviews/<branch>.md` (branch name with `/` replaced by `-`).
-5. Reply with the verdict and the MUST-FIX list. Do not fix anything unless the user asks.
+5. Reply with the verdict and the Critical and Important issues. Do not fix anything unless the user asks.

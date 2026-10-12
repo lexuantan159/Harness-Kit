@@ -12,7 +12,7 @@ Phases (stop for user approval after 1, 2 and 3):
    `@senior-reviewer` reviews it (max 3 rounds).
 3. **Tasks** - `tasks.md`: ordered, independently verifiable tasks with verify commands.
 4. **Implement** - for each task: `@coder` (TDD) -> `@tester`. Tick the task in `tasks.md`.
-5. **Converge** - `@reviewer` on the full diff, fix must-fix items (max 3 loops), check every
+5. **Converge** - `@reviewer` on the full diff, `@coder` fixes Critical and Important issues (max 3 loops), check every
    acceptance criterion, then summarise to `docs/ai/sessions/<date>-<slug>.md`.
 
 If a loop hits 3 rounds without converging, append to `docs/ai/report/harness-issues.md`

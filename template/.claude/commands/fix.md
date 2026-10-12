@@ -12,6 +12,6 @@ Fix: $ARGUMENTS
 4. `@coder` fixes the root cause (not the symptom) with the smallest diff (`bug-fixing` skill).
 5. `@tester` runs the regression test (now green) and the related suite. Max 3 fix attempts.
 6. Run the full verify commands from CLAUDE.md.
-7. `@reviewer` checks the diff; address MUST-FIX items.
+7. `@reviewer` checks the diff; `@coder` fixes its Critical and Important issues.
 8. Commit `fix(<scope>): <summary>` with the ticket reference; open a PR only if asked.
    Reply with: root cause, fix, test added, commands run.

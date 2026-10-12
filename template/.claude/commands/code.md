@@ -11,10 +11,11 @@ Implement: $ARGUMENTS
 3. For each step, in order (`incremental-implementation` skill):
    - `@coder` implements the step (tests first when behaviour changes).
    - `@tester` runs the step's verify command and the related tests.
-   - Red -> back to `@coder` with the exact failure. Max 3 attempts per step; then stop and log
+   - Red -> back to `@coder` with `@tester`'s Bug List. Max 3 attempts per step; then stop and log
      to `docs/ai/report/harness-issues.md`.
 4. Run the full verify commands from CLAUDE.md (build, test, lint).
-5. `@reviewer` on the whole diff. Fix MUST-FIX items, re-run verification (max 3 rounds).
+5. `@reviewer` on the whole diff. `@coder` fixes the Critical and Important
+   issues from its Issue List, then re-run verification (max 3 rounds).
 6. Commit with a Conventional Commit message referencing the ticket. Push / open a PR only if the
    user asked (`gh pr create`).
 7. Write `docs/ai/sessions/<YYYY-MM-DD>-<slug>.md`: what changed, commands run with results,
