@@ -1,11 +1,26 @@
 ---
 name: mermaid-diagrams
-description: Draw architecture, sequence, ER, state and flow diagrams in Mermaid that render on GitHub/GitLab and stay maintainable. Use when documenting architecture, data models, flows or decisions.
+description: Use when documenting architecture, data models, flows or decisions. Draws architecture, sequence, ER, state and flow diagrams in Mermaid that render on GitHub/GitLab and stay maintainable.
 ---
 
-# Mermaid diagrams
+# Mermaid Diagrams
 
-Pick the diagram that answers one question:
+Draw one diagram per question, using names the reader can find in the code.
+
+## Anti-Pattern: "The Whole System In One Picture"
+
+A 40-node diagram answers no question and nobody updates it. One idea per diagram, split the rest.
+
+## Checklist
+
+1. **Context** - use real names from `docs/ai/context/ARCHITECTURE.md` / `SCHEMA.md` and the code
+2. **Pick** the diagram that answers one question
+3. **Draw** within the size limit
+4. **Label** edges
+5. **Validate** by rendering
+
+## The Process
+
 | Question | Diagram |
 |---|---|
 | What are the parts and how do they connect? | `flowchart LR` |
@@ -14,13 +29,12 @@ Pick the diagram that answers one question:
 | What states can X be in? | `stateDiagram-v2` |
 | What depends on what over time? | `gantt` / `timeline` |
 
-## Rules
 - One idea per diagram, <= ~15 nodes; split otherwise.
-- Use real names from the code (module, class, table) so readers can find them.
+- Real names (module, class, table) so readers can find them.
 - Label edges with the verb/protocol (`-- REST -->`, `-- publishes OrderPlaced -->`).
 - Quote labels with special characters: `A["Order API (v2)"]`.
-- Avoid styling/colours that break dark mode; let the renderer theme it.
-- Validate by rendering (GitHub/GitLab preview or `npx @mermaid-js/mermaid-cli -i x.mmd -o x.svg`).
+- No styling/colours that break dark mode; let the renderer theme it.
+- Validate: GitHub/GitLab preview or `npx @mermaid-js/mermaid-cli -i x.mmd -o x.svg`.
 
 ```mermaid
 sequenceDiagram
@@ -34,3 +48,14 @@ sequenceDiagram
   S-->>API: OrderId
   API-->>C: 201 Created
 ```
+
+## Key Principles
+
+- One question, one diagram
+- Real names from the code
+- Labelled edges
+- Rendered before committed
+
+## Transition
+
+Diagrams go into ARCHITECTURE.md / SCHEMA.md (`@documenter`) or ADRs (`technical-writing`).

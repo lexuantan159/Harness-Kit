@@ -1,21 +1,59 @@
 ---
 name: api-development
-description: Implement an API endpoint end to end - controller, validation, service, persistence, mapping, tests - following the project's layering. Use when building or changing an endpoint after its design is agreed.
+description: Use when building or changing an endpoint after its contract is agreed. Implements an API endpoint end to end - controller, validation, service, persistence, mapping, tests - following the project's layering.
 ---
 
-# API development
+# API Development
 
-1. Find the closest existing endpoint and mirror its layers and file layout.
-2. **Contract first** - request/response DTOs and OpenAPI entry; never expose entities directly.
-3. **Validation at the boundary** - bean validation / schema (zod, pydantic, ...) on input;
-   reject unknown/oversized input; return the project's error format.
-4. **Authorization** - check permission and ownership (object-level) in the service, not only
-   at the route.
-5. **Service** - business logic, transactions at this layer; no HTTP types inside.
-6. **Persistence** - parameterised queries/ORM, avoid N+1, index for new query patterns.
-7. **Mapping & errors** - map domain exceptions to status codes centrally (`error-handling`).
+Implement an endpoint that follows the project's layers, validates its input and proves its
+behaviour with tests.
+
+<HARD-GATE>
+Do NOT implement an endpoint whose contract is not agreed. New or changed contracts go through
+`api-design` first.
+</HARD-GATE>
+
+## Anti-Pattern: "Logic In The Controller"
+
+Business rules in the route handler cannot be reused, tested in isolation or secured
+consistently. Keep HTTP at the edge.
+
+## Checklist
+
+1. **Context** - read `docs/ai/context/ARCHITECTURE.md`; find the closest existing endpoint and
+   mirror its layers and file layout
+2. **Contract first** - request/response DTOs and OpenAPI entry
+3. **Validation at the boundary**
+4. **Authorization** in the service
+5. **Service** logic and transactions
+6. **Persistence**
+7. **Mapping & errors**
 8. **Tests**
-   - unit tests for service logic (happy, edge, error);
-   - one integration/slice test per endpoint: status, body, validation error, authz failure.
-9. **Observability** - log at boundaries with correlation id, no personal data/secrets.
-10. Run build + tests; update OpenAPI and docs.
+9. **Observability**
+10. **Verify** - build + tests; OpenAPI and docs updated
+
+## The Process
+
+- **Validation:** bean validation / schema (zod, pydantic, ...) on input; reject unknown or
+  oversized input; return the project's error format.
+- **Authorization:** check permission and ownership (object-level) in the service, not only at
+  the route.
+- **Service:** business logic and transactions at this layer; no HTTP types inside.
+- **Persistence:** parameterised queries/ORM, avoid N+1, index new query patterns
+  (`database-design`).
+- **Errors:** map domain exceptions to status codes centrally (`error-handling`).
+- **Tests:** unit tests for service logic (happy, edge, error); one integration/slice test per
+  endpoint covering status, body, validation error and authz failure (`test-driven-development`).
+- **Observability:** log at boundaries with a correlation id, no personal data or secrets.
+
+## Key Principles
+
+- Mirror the closest existing endpoint
+- Validate at the edge, authorize in the service
+- DTOs, never persistence entities, in requests and responses
+- Every endpoint has an authz-failure test
+
+## Transition
+
+`@tester` runs the verify command; then `@reviewer`. Auth-related endpoints also go through
+`authentication` and `security-audit`.

@@ -1,28 +1,51 @@
 ---
 name: git-workflows
-description: Branching, commits, rebasing, PRs and conflict resolution following the project's conventions, safely. Use for committing, preparing a PR, resolving conflicts, or cleaning up history.
+description: Use for committing, preparing a PR, resolving conflicts, or cleaning up history. Handles branching, commits, rebasing, PRs and conflict resolution following the project's conventions, safely.
 ---
 
-# Git workflows
+# Git Workflows
 
-## Branches
-`feature/<ticket>-<slug>`, `fix/<ticket>-<slug>`, `chore/...` from the default branch
-(match the project's existing names: `git branch -r`).
+Keep history readable and shared branches safe.
 
-## Commits (Conventional Commits)
-`type(scope): summary` - types: feat, fix, refactor, test, docs, chore, perf, build, ci.
-Imperative, <= 72 chars, ticket reference in the summary or footer. Body explains *why*.
-One logical change per commit; never commit secrets, build output or debug code
-(check `git diff --cached` first).
+<HARD-GATE>
+Do NOT push, open PRs, force-push, `reset --hard`, `clean -f` or rewrite pushed history unless the
+user asked for it. Never `push --force` to a shared branch (use `--force-with-lease` on your own
+branch only, if allowed).
+</HARD-GATE>
 
-## Before a PR
-Rebase on or merge the latest default branch (project convention), run the verify commands,
-self-review (`/review`). PR description: what, why, how tested, risks, screenshots for UI.
+## Anti-Pattern: "WIP, Fix, Fix Again"
 
-## Conflicts
-Understand both sides (`git log -p --merge`), keep both intents, re-run tests.
+Commits that mix concerns or say nothing make review, bisect and revert painful. One logical
+change per commit, with a message that explains why.
 
-## Safety
-- No `push --force` to shared branches (use `--force-with-lease` on your own branch only, if allowed).
-- No `reset --hard`, `clean -f`, history rewrites on pushed commits without the user's go-ahead.
-- Push and open PRs only when the user asks.
+## Checklist
+
+1. **Context** - match the project's branch names (`git branch -r`) and commit style (`git log`)
+2. **Branch** from the default branch
+3. **Commit** - one logical change, checked for secrets
+4. **Before a PR** - update, verify, self-review
+5. **Conflicts** - keep both intents
+6. **Push / PR** only when asked
+
+## The Process
+
+- **Branches:** `feature/<ticket>-<slug>`, `fix/<ticket>-<slug>`, `chore/...`.
+- **Commits (Conventional Commits):** `type(scope): summary` - feat, fix, refactor, test, docs,
+  chore, perf, build, ci. Imperative, <= 72 chars, ticket reference in the summary or footer. Body
+  explains *why*. Check `git diff --cached` first: no secrets, build output or debug code.
+- **Before a PR:** rebase on or merge the latest default branch (project convention), run the
+  verify commands, self-review (`/review`). PR description: what, why, how tested, risks,
+  screenshots for UI (`technical-writing`).
+- **Conflicts:** understand both sides (`git log -p --merge`), keep both intents, re-run tests.
+
+## Key Principles
+
+- One logical change per commit
+- The message says why
+- Shared history is never rewritten
+- Push only when asked
+
+## Transition
+
+After the user approves pushing: `gh pr create` with the PR template; review comes from humans or
+`/pr-review`.

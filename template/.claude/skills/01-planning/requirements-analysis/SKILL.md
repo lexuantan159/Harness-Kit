@@ -1,19 +1,52 @@
 ---
 name: requirements-analysis
-description: Turn a ticket or request into precise, testable requirements and acceptance criteria, surfacing gaps and assumptions. Use before planning any ticket, or when a requirement is ambiguous.
+description: Use before planning any ticket, or when a requirement is ambiguous. Turns a ticket or request into precise, testable requirements and acceptance criteria, surfacing gaps and assumptions.
 ---
 
-# Requirements analysis
+# Requirements Analysis
 
-1. **Restate** the request in your own words: actor, goal, benefit.
-2. **Extract** functional requirements as numbered statements ("The system shall ...").
-3. **Acceptance criteria** in Given / When / Then, including:
-   - the happy path, at least two edge cases, and the error/permission path.
-4. **Non-functional**: performance, security/permissions, audit, i18n, accessibility,
-   compatibility, data retention - only those that apply.
-5. **Out of scope**: say explicitly what is not included.
-6. **Gaps & assumptions**: list every ambiguity. Mark each as a question (blocks work) or an
-   assumption (we proceed, user can correct).
-7. **Check against code**: does current behaviour already contradict or partly satisfy it?
+Turn a request into requirements precise enough to test, with every gap visible.
 
-Never fill gaps on business rules, data deletion, auth or public API contracts with guesses.
+<HARD-GATE>
+Do NOT fill gaps on business rules, data deletion, auth or public API contracts with guesses.
+Each such gap is a blocking question until the user or ticket answers it.
+</HARD-GATE>
+
+## Anti-Pattern: "I Know What They Mean"
+
+Unstated assumptions become the bugs found in acceptance testing. Write them down so they can be
+corrected cheaply now.
+
+## Checklist
+
+1. **Context** - read `docs/ai/context/BUSINESS.md` and `ARCHITECTURE.md`
+2. **Restate** the request: actor, goal, benefit
+3. **Extract** functional requirements
+4. **Acceptance criteria** in Given / When / Then
+5. **Non-functional** requirements that apply
+6. **Out of scope**
+7. **Gaps & assumptions**
+8. **Check against code**
+
+## The Process
+
+- **Functional:** numbered statements ("The system shall ...").
+- **Acceptance criteria:** the happy path, at least two edge cases, and the error/permission path.
+- **Non-functional:** performance, security/permissions, audit, i18n, accessibility,
+  compatibility, data retention - only those that apply.
+- **Out of scope:** say explicitly what is not included.
+- **Gaps:** mark each as a question (blocks work) or an assumption (we proceed, user can correct).
+- **Against code:** does current behaviour already contradict or partly satisfy it? (`scout`)
+- **Business rules:** apply `business-context` when rules are touched.
+
+## Key Principles
+
+- Testable or it isn't a requirement
+- Edge and error paths are requirements too
+- Gaps visible, never silently filled
+- Out of scope is written down
+
+## Transition
+
+Requirements and acceptance criteria feed `writing-plans` (`/plan`) or `spec.md`
+(`spec-driven-development`).
