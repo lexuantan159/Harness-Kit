@@ -9,6 +9,7 @@ ok() { echo "ok   $*"; }
 command -v jq >/dev/null && command -v git >/dev/null || fail "smoke test needs jq and git"
 
 cd "$T" && git init -q && cd - >/dev/null
+printf '{"type":"module"}\n' > "$T/package.json"   # hooks must still run in ESM projects
 printf 'my own rules\n' > "$T/CLAUDE.md"
 
 "$KIT/install.sh" "$T" --dry-run >/dev/null

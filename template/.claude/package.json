@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "type": "commonjs",
+  "description": "Keeps harness hooks and scripts CommonJS even when the project's package.json sets \"type\": \"module\"."
+}
