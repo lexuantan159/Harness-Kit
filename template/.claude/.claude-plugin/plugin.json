@@ -3,5 +3,14 @@
   "version": "1.0.0",
   "description": "AI agent harness: agent team, workflow commands (/plan /code /fix /review /spec ...), 45 lifecycle skills, ponytail minimal-code hooks.",
   "author": { "name": "lexuantan" },
-  "keywords": ["harness", "agents", "skills", "workflow", "ponytail"]
+  "keywords": ["harness", "agents", "skills", "workflow", "ponytail"],
+  "skills": [
+    "./skills/00-meta/",
+    "./skills/01-planning/",
+    "./skills/02-exploration/",
+    "./skills/03-backend/",
+    "./skills/04-frontend/",
+    "./skills/05-quality/",
+    "./skills/06-delivery/"
+  ]
 }

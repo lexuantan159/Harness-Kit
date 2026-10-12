@@ -21,6 +21,9 @@ const PLUGIN_ONLY = ['.claude/.claude-plugin/', '.claude/hooks/hooks.json'];
 // Written once, then owned by the project. Never overwritten or removed.
 const SEED_FILES = [/^docs\/ai\/context\//, /^docs\/ai\/(reviews|sessions|report)\/\.gitkeep$/];
 const COPILOT_FILES = /^\.github\//;
+// Skills are grouped in the kit (skills/05-quality/<name>/) but Claude Code only discovers
+// .claude/skills/<name>/SKILL.md, so the category folder is dropped on install.
+const SKILL_CATEGORY = /^(\.claude\/skills\/)\d\d-[^/]+\/(?=[^/]+\/)/;
 const GITIGNORE_LINES = [
   'mcp/.env',
   '.claude/settings.local.json',
@@ -137,7 +140,9 @@ function plan(cfg) {
   for (const rel of walk(TEMPLATE)) {
     if (PLUGIN_ONLY.some((p) => rel === p || rel.startsWith(p))) continue;
     if (!cfg.copilot && COPILOT_FILES.test(rel)) continue;
-    files.set(rel, render(rel, fs.readFileSync(path.join(TEMPLATE, rel)), cfg));
+    const dest = rel.replace(SKILL_CATEGORY, '$1');
+    if (files.has(dest)) throw new Error(`Two kit files install to ${dest}`);
+    files.set(dest, render(dest, fs.readFileSync(path.join(TEMPLATE, rel)), cfg));
   }
   const available = fs.readdirSync(path.join(KIT_ROOT, 'stacks'));
   const stacks = typeof cfg.stacks === 'string' ? cfg.stacks.split(',').map((s) => s.trim()).filter(Boolean) : cfg.stacks;

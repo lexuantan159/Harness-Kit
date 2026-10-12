@@ -11,7 +11,10 @@ const input = readInput();
 const root = projectDir(input);
 const parts = [];
 
-const metaSkill = path.join(__dirname, '..', 'skills', 'using-agent-skills', 'SKILL.md');
+// Flat in an installed project, grouped by category when loaded as a plugin.
+const metaSkill = ['using-agent-skills', path.join('00-meta', 'using-agent-skills')]
+  .map((d) => path.join(__dirname, '..', 'skills', d, 'SKILL.md'))
+  .find((p) => fs.existsSync(p));
 try {
   const body = fs.readFileSync(metaSkill, 'utf8').replace(/^---[\s\S]*?---\s*/, '');
   parts.push(body.trim());

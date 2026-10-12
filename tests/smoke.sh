@@ -30,6 +30,7 @@ for f in CLAUDE.md AGENTS.md .mcp.json .harness-version .harness-manifest.json .
 done
 [ ! -e "$T/.claude/.claude-plugin" ] && [ ! -e "$T/.claude/hooks/hooks.json" ] || fail "plugin-only files installed"
 [ ! -e "$T/.claude/skills/python-development" ] || fail "unselected stack installed"
+[ -z "$(find "$T/.claude/skills" -mindepth 1 -maxdepth 1 -name '[0-9][0-9]-*')" ] || fail "skill category folder not flattened"
 ok "install creates expected files"
 
 grep -rn '{{[A-Z_]*}}' "$T" --exclude-dir=.git && fail "unrendered placeholders"
