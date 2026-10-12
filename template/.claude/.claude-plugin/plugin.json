@@ -1,6 +1,6 @@
 {
   "name": "harness-kit",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "AI agent harness: agent team, workflow commands (/plan /code /fix /review /spec ...), 45 lifecycle skills, ponytail minimal-code hooks.",
   "author": { "name": "lexuantan" },
   "keywords": ["harness", "agents", "skills", "workflow", "ponytail"],
